@@ -1,0 +1,10 @@
+<%= form_with(model: game, html: { class: "game-form" }) do |form| %>
+  <div>
+    <%= form.label :multiplayer %>
+    <%= form.check_box :multiplayer %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

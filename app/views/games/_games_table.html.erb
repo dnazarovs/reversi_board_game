@@ -1,0 +1,16 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Game ID</th>
+    <th scope="col">Opponent</th>
+    <th scope="col">Created At</th>
+    <th scope="col">Actions</th>
+  </tr>
+  </thead>
+  <tbody id="games">
+    <% current_user.games.each_with_index do |game, index| %>
+     <%= render game, index: index %>
+    <% end %>
+  </tbody>
+</table>

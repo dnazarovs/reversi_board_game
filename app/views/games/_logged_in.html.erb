@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>Welcome, <%= current_user.email %>!</h2>
+    <p>Here are your current games:</p>
+    <div class="my-3">
+      <%= link_to 'Create Game', new_game_path, class: 'btn btn-success', data: { turbo_frame: 'new_game' } %>
+    </div>
+    <%= turbo_frame_tag Game.new %>
+    <%= render 'games_table' %>
+  </div>
+</div>

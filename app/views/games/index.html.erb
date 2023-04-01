@@ -1,0 +1,11 @@
+<p style="color: green"><%= notice %></p>
+<div class="container mt-3">
+  <h1 class="mb-4">Reversi Game</h1>
+  <p class="lead mb-4">Created by Daniils Nazarovs 211RDB111</p>
+  <% if user_signed_in? %>
+    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-primary btn-lg w-100 mb-3" %>
+    <%= render 'logged_in' %>
+  <% else %>
+    <%= render 'not_logged_in' %>
+  <% end %>
+</div>

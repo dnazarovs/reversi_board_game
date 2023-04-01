@@ -1,0 +1,10 @@
+<tr>
+  <th scope="row"><%= index + 1 %></th>
+  <td><%= game.id %></td>
+  <td><%= game.multiplayer ? 'Player' : 'Computer' %></td>
+  <td><%= game.created_at.strftime("%B %d, %Y %I:%M %p") %></td>
+  <td>
+    <%= link_to 'Play Game', game, class: 'btn btn-primary' %>
+    <%= button_to 'Delete Game', game, method: :delete, class: 'btn btn-danger' %>
+  </td>
+</tr>

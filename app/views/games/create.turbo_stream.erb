@@ -1,0 +1,2 @@
+<%= turbo_stream.append 'games', partial: 'game', locals: { game: @game, index: current_user.games.count - 1 } %>
+<%= turbo_stream.update Game.new, "" %>
