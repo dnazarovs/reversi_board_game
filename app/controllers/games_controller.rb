@@ -3,7 +3,8 @@
 # GamesController
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: :index
-  before_action :set_game, only: %i[show update destroy]
+  before_action :set_game, only: %i[show update destroy ai_move]
+  require_dependency Rails.root.join('lib', 'reversi_ai')
 
   def index
     @games = Game.all
@@ -29,7 +30,14 @@ class GamesController < ApplicationController
     end
   end
 
-  def update; end
+  def ai_move
+    board = params[:board]
+    color = params[:color]
+
+    move = ReversiAi.new(board, color, @game.difficulty).move
+
+    render json: { move: move }
+  end
 
   def destroy
     @game.destroy
@@ -49,6 +57,6 @@ class GamesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def game_params
-    params.require(:game).permit(:multiplayer)
+    params.require(:game).permit(:multiplayer, :difficulty)
   end
 end

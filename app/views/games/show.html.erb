@@ -1,0 +1,11 @@
+<div data-controller="reversi" class="reversi" data-game-id="<%= @game.id %>">
+  <div data-reversi-target="startGame" class="start-game">
+    <h2>Choose the first player:</h2>
+    <%= button_tag "Human", data: { action: "reversi#startGame", player: "human" }, class: "start-game-button" %>
+    <%= button_tag "Computer", data: { action: "reversi#startGame", player: "computer" }, class: "start-game-button" %>
+  </div>
+  <div data-reversi-target="board"></div>
+  <div data-reversi-target="resetGame" class="reset-game" style="display: none;">
+    <%= button_tag "Reset Game", data: { action: "reversi#resetGame" }, class: "reset-game-button" %>
+  </div>
+</div>

@@ -5,6 +5,12 @@
   </div>
 
   <div>
+    <%= form.label :difficulty %>
+    <%= form.select :difficulty, Game.difficulties.keys,
+                    { prompt: 'Select a game difficulty' } %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>
