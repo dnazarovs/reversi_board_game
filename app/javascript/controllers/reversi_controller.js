@@ -3,9 +3,8 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="reversi"
 export default class extends Controller {
 
-  static targets = ["board", "startGame", "resetGame"];
+  static targets = ["board", "startGame", "resetGame", "counter", "endGame"];
   connect() {
-    this.gameId = this.data.get("gameId");
   }
 
   startGame(event) {
@@ -14,6 +13,7 @@ export default class extends Controller {
     this.humanColor = firstPlayer === 'human' ? 'black' : 'white';
     this.computerColor = firstPlayer === 'human' ? 'white' : 'black';
     this.initialiseBoard();
+    this.counterTarget.style.display = '';
     this.resetGameTarget.style.display = 'block';
     if (firstPlayer === 'computer') {
       this.computerMove();
@@ -46,6 +46,7 @@ export default class extends Controller {
     this.setPiece(3, 4, 'black');
     this.setPiece(4, 3, 'black');
     this.setPiece(4, 4, 'white');
+    this.updatePieceCount();
     this.highlightValidMoves();
     this.initialBoardState = JSON.parse(JSON.stringify(this.board));
   }
@@ -72,14 +73,17 @@ export default class extends Controller {
     if (this.isComputerMoving) {
       return; // Do not allow user to make a move if the computer is currently moving
     }
-    const row = parseInt(event.target.dataset.row);
-    const col = parseInt(event.target.dataset.col);
+
+    const targetElement = event.target.classList.contains('piece') ? event.target.parentElement : event.target;
+    const row = parseInt(targetElement.dataset.row);
+    const col = parseInt(targetElement.dataset.col);
 
     if (!this.board[row][col] && this.isValidMove(row, col, this.humanColor)) {
       this.setPiece(row, col, this.humanColor);
       this.flipPieces(row, col, this.humanColor);
       this.highlightValidMoves();
-      this.computerMove();
+      this.isComputerMoving = true;
+      setTimeout(() => this.computerMove(), 500);
     }
   }
 
@@ -147,6 +151,7 @@ export default class extends Controller {
         y += dy;
       }
     }
+    this.updatePieceCount();
   }
 
   highlightValidMoves() {
@@ -163,7 +168,6 @@ export default class extends Controller {
   }
 
   async computerMove() {
-    this.isComputerMoving = true;
 
     try {
       const move = await this.getComputerMove(this.board, this.computerColor);
@@ -203,6 +207,48 @@ export default class extends Controller {
     }
 
     const data = await response.json();
-    return data.move;
+
+    if (data.move === 'pass') {
+      return { pass: true };
+    } else {
+      return data.move;
+    }
   }
+
+  has_valid_moves(color) {
+    for (let row = 0; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        if (!this.board[row][col] && this.isValidMove(row, col, color)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  updatePieceCount() {
+    const blackScoreElement = this.element.querySelector('#black-score');
+    const whiteScoreElement = this.element.querySelector('#white-score');
+
+    let blackScore = 0;
+    let whiteScore = 0;
+
+    whiteScore = this.board.flat().filter(cell => cell === 'white').length;
+    blackScore = this.board.flat().filter(cell => cell === 'black').length;
+
+    blackScoreElement.textContent = blackScore;
+    whiteScoreElement.textContent = whiteScore;
+
+    if (blackScore + whiteScore === 64 || (!this.has_valid_moves(this.humanColor) && !this.has_valid_moves(this.humanColor))) {
+      const winner = blackScore > whiteScore ? 'Black' : (blackScore < whiteScore ? 'White' : null);
+      this.showEndGame(winner);
+    }
+  }
+
+  showEndGame(winner) {
+    const endGameMessage = this.endGameTarget.querySelector(".end-game-message");
+    endGameMessage.textContent = winner ? `Player ${winner} wins!` : "It's a draw!";
+    this.endGameTarget.style.display = "block";
+  }
+
 }

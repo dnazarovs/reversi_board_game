@@ -93,70 +93,62 @@
   }
 }
 
-.counters {
+.score-container {
   display: flex;
   justify-content: center;
-  margin: 1rem 0;
-}
-
-.progress-circle {
-  position: relative;
-  width: 150px;
-  height: 150px;
-}
-
-.circle-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  margin-bottom: 20px;
 }
 
-.mask,
-.fill {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  clip: rect(0, 150px, 150px, 75px);
+.score {
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
 }
 
-.mask {
-  clip: rect(0, 75px, 150px, 0);
-}
-
-.fill {
-  background-color: #4caf50;
-  clip: rect(0, 75px, 150px, 0);
+.black-piece,
+.white-piece {
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  transition: transform 0.5s linear;
+  margin-right: 10px;
 }
 
-.mask.full .fill {
-  clip: rect(0, 150px, 150px, 75px);
+.black-piece {
+  background-color: #000;
 }
 
-.fill.fix {
-  display: none;
-  background-color: #3c763d;
+.white-piece {
+  background-color: #FFF;
+  box-shadow: 0 0 0 2px #999;
 }
 
-.mask.half .fill.fix {
-  display: block;
-}
-
-.counter {
-  font-size: 1rem;
+.score-text {
+  font-size: 24px;
   font-weight: bold;
 }
 
-.black-counter span {
-  color: #000;
+.end-game-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
 }
 
-.white-counter span {
-  color: #fff;
+.end-game-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

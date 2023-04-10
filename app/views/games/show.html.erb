@@ -1,4 +1,14 @@
 <div data-controller="reversi" class="reversi" data-game-id="<%= @game.id %>">
+  <div data-reversi-target="counter" class="score-container" style="display: none;">
+    <div class="score">
+      <div class="black-piece"></div>
+      <span id="black-score" class="score-text">0</span>
+    </div>
+    <div class="score">
+      <div class="white-piece"></div>
+      <span id="white-score" class="score-text">0</span>
+    </div>
+  </div>
   <div data-reversi-target="startGame" class="start-game">
     <h2>Choose the first player:</h2>
     <%= button_tag "Human", data: { action: "reversi#startGame", player: "human" }, class: "start-game-button" %>
@@ -8,4 +18,15 @@
   <div data-reversi-target="resetGame" class="reset-game" style="display: none;">
     <%= button_tag "Reset Game", data: { action: "reversi#resetGame" }, class: "reset-game-button" %>
   </div>
+  <div>
+    <%= link_to "Back to games", games_path, class: "btn" %>
+  </div>
+  <div data-reversi-target="endGame" class="end-game-modal" style="display: none;">
+    <div class="end-game-content">
+      <h2 class="end-game-message"></h2>
+      <button data-action="reversi#resetGame" class="reset-game-button">Start Over</button>
+      <%= link_to "Back to games", games_path, class: "reset-game-button" %>
+    </div>
+  </div>
 </div>
+

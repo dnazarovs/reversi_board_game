@@ -1,10 +1,5 @@
 <%= form_with(model: game, html: { class: "game-form" }) do |form| %>
   <div>
-    <%= form.label :multiplayer %>
-    <%= form.check_box :multiplayer %>
-  </div>
-
-  <div>
     <%= form.label :difficulty %>
     <%= form.select :difficulty, Game.difficulties.keys,
                     { prompt: 'Select a game difficulty' } %>

@@ -23,6 +23,12 @@ class ReversiAi
 
   def move
     best_move = alpha_beta(@board, @color, @difficulty, -Float::INFINITY, Float::INFINITY).last
+    if best_move.nil?
+      moves = valid_moves(@board, @color)
+      return nil if moves.empty? # Return nil if there are no valid moves
+
+      best_move = moves.first
+    end
     { row: best_move[0], col: best_move[1] }
   end
 
@@ -77,7 +83,6 @@ class ReversiAi
         end
       end
     end
-
     moves
   end
 
@@ -135,4 +140,3 @@ class ReversiAi
     end
   end
 end
-
