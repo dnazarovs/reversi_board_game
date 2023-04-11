@@ -44,9 +44,9 @@ Set up the database:
 **Running the Project
 Start the Rails server:**
 
-bin/dev
+rails s
 
-Open your web browser and navigate to http://localhost:3001 to access the Reversi Game application.
+Open your web browser and navigate to http://localhost:3000 to access the Reversi Game application.
 
 Enjoy playing the game!
 
