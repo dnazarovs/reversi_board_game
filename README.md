@@ -21,9 +21,7 @@ Clone the Reversi Game repository:
 
 Copy code
 
-git clone https://github.com/yourusername/reversi-game.git
-
-_Replace yourusername with your actual GitHub username._
+git clone https://github.com/dnazarovs/reversi-game.git
 
 Navigate to the project directory:
 
