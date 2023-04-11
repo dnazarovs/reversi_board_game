@@ -82,6 +82,8 @@ export default class extends Controller {
       this.setPiece(row, col, this.humanColor);
       this.flipPieces(row, col, this.humanColor);
       this.highlightValidMoves();
+    }
+    if (this.hasValidMoves(this.humanColor)) {
       this.isComputerMoving = true;
       setTimeout(() => this.computerMove(), 500);
     }
@@ -168,21 +170,14 @@ export default class extends Controller {
   }
 
   async computerMove() {
-
-    try {
-      const move = await this.getComputerMove(this.board, this.computerColor);
+    const move = await this.getComputerMove(this.board, this.computerColor);
+    if (!move.pass) {
       const { row, col } = move;
-
-      if (row != null && col != null) {
-        this.setPiece(row, col, this.computerColor);
-        this.flipPieces(row, col, this.computerColor);
-        this.highlightValidMoves();
-      }
-    } catch (error) {
-      console.error('Error during computer move:', error);
-    } finally {
-      this.isComputerMoving = false;
+      this.setPiece(row, col, this.computerColor);
+      this.flipPieces(row, col, this.computerColor);
     }
+    this.highlightValidMoves();
+    this.isComputerMoving = false;
   }
 
   async getComputerMove(board, color) {
@@ -208,14 +203,14 @@ export default class extends Controller {
 
     const data = await response.json();
 
-    if (data.move === 'pass') {
+    if (data.move === null) {
       return { pass: true };
     } else {
       return data.move;
     }
   }
 
-  has_valid_moves(color) {
+  hasValidMoves(color) {
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
         if (!this.board[row][col] && this.isValidMove(row, col, color)) {
@@ -239,7 +234,7 @@ export default class extends Controller {
     blackScoreElement.textContent = blackScore;
     whiteScoreElement.textContent = whiteScore;
 
-    if (blackScore + whiteScore === 64 || (!this.has_valid_moves(this.humanColor) && !this.has_valid_moves(this.humanColor))) {
+    if (blackScore + whiteScore === 64 || (!this.hasValidMoves(this.humanColor) && !this.hasValidMoves(this.humanColor))) {
       const winner = blackScore > whiteScore ? 'Black' : (blackScore < whiteScore ? 'White' : null);
       this.showEndGame(winner);
     }
@@ -250,5 +245,4 @@ export default class extends Controller {
     endGameMessage.textContent = winner ? `Player ${winner} wins!` : "It's a draw!";
     this.endGameTarget.style.display = "block";
   }
-
 }
