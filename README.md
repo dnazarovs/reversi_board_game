@@ -21,9 +21,7 @@ Clone the Reversi Game repository:
 
 Copy code
 
-git clone https://github.com/yourusername/reversi-game.git
-
-_Replace yourusername with your actual GitHub username._
+git clone https://github.com/dnazarovs/reversi-game.git
 
 Navigate to the project directory:
 
@@ -46,9 +44,9 @@ Set up the database:
 **Running the Project
 Start the Rails server:**
 
-bin/dev
+rails s
 
-Open your web browser and navigate to http://localhost:3001 to access the Reversi Game application.
+Open your web browser and navigate to http://localhost:3000 to access the Reversi Game application.
 
 Enjoy playing the game!
 
